@@ -1,6 +1,6 @@
 # VirTech Systems — Team Roster
 
-_Last updated: 2026-10-13. Source: Microsoft 365 org chart, plus corrections from Austin Hunter._
+_Last updated: 2026-10-13. Source: Austin Hunter._
 
 29 people. Everyone is based in DeLand unless the notes say otherwise. "Reports to" is confirmed
 for everyone.
