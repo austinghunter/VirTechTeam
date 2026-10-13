@@ -4,7 +4,7 @@ _Last updated: 2026-10-13. Source: Microsoft 365 org chart, plus corrections fro
 
 29 people. Everyone is based in DeLand unless the notes say otherwise. Where a role
 differs from the M365 title, the notes give the M365 title. "Reports to" is
-filled in only where it's confirmed; blanks mean it hasn't been confirmed yet.
+confirmed for everyone.
 
 ## Leadership
 
@@ -21,15 +21,16 @@ filled in only where it's confirmed; blanks mean it hasn't been confirmed yet.
 
 | Name | Title | Reports to | Notes |
 |------|-------|------------|-------|
-| Chris Vitalien | Field Service Coordinator | | |
+| Chris Vitalien | Field Service Coordinator | Kale Osborn | |
 | Daniel Guay | Account Manager | Karl Mahoney | |
 | Emilio Colon | Project Manager | Karl Mahoney | |
 | Kelly Harrington | Executive Operations Assistant | Karl Mahoney | |
-| Robert Ryan | Projects Team | | M365 title: Tier 3 Helpdesk Tech. |
+| Robert Ryan | Projects Team | Kale Osborn | M365 title: Tier 3 Helpdesk Tech. |
 
 ## Helpdesk (Remote Support)
 
-Kale Osborn leads the helpdesk and reports to Karl Mahoney. Everyone else on the team reports to Kale.
+Kale Osborn leads the helpdesk and reports to Karl Mahoney. Everyone else on the team reports to Kale,
+as do Chris Vitalien and Robert Ryan (listed under Operations, Projects & Accounts).
 
 | Name | Title | Reports to | Notes |
 |------|-------|------------|-------|
@@ -57,10 +58,5 @@ Jerry Smith leads the Alabama techs.
 | Jerry Smith | Alabama Team Lead | Austin Hunter | Alabama. M365 title: Tier 1 Onsite Tech Team Lead. |
 | Hunter Hall | Tier 1 Onsite Tech | Jerry Smith | Alabama. |
 | Ken Hawkins | Tier 1 Onsite Tech | Jerry Smith | Alabama. |
-| Terence Anderson | Tier 1 Onsite Tech | Jerry Smith | Alabama. No title in M365. |
-| Caleb Bierbrodt | Tier 1 Onsite Tech | Austin Hunter | Colorado. No title in M365. |
-
-## Still to confirm
-
-- Managers for Chris Vitalien and Robert Ryan.
-- M365 titles for Caleb Bierbrodt and Terence Anderson (both blank).
+| Terence Anderson | Tier 1 Onsite Tech | Jerry Smith | Alabama. |
+| Caleb Bierbrodt | Tier 1 Onsite Tech | Austin Hunter | Colorado. |
