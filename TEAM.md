@@ -10,10 +10,10 @@ filled in only where it's confirmed; blanks mean it hasn't been confirmed yet.
 
 | Name | Title | Reports to | Notes |
 |------|-------|------------|-------|
-| Tyler Spore | Chief Executive Officer | — | Department: Operations. |
+| Tyler Spore | Chief Executive Officer | — | Department: Operations. 3 direct reports, 28 total. Assistant: Janna Veneziano. |
 | Karl Mahoney | Chief Operations Officer | Tyler Spore | Department: Operations. 7 direct reports. |
-| Chris Friesen | Chief Security Officer | | Remote. |
-| Janna Veneziano | Chief Administrative Officer | | |
+| Chris Friesen | Chief Security Officer | Tyler Spore | Remote. |
+| Janna Veneziano | Chief Administrative Officer | Tyler Spore | Listed in M365 as Tyler's assistant. |
 | Kevin Phillips | Chief Technical Officer | Karl Mahoney | |
 | Zach Koscoe | Director Of Support | Karl Mahoney | Now working on projects. |
 
@@ -62,5 +62,5 @@ Jerry Smith leads the Alabama techs.
 
 ## Still to confirm
 
-- Managers for Chris Friesen, Janna Veneziano, Chris Vitalien and Robert Ryan.
+- Managers for Chris Vitalien and Robert Ryan.
 - M365 titles for Caleb Bierbrodt and Terence Anderson (both blank).
