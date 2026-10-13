@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VirTech Org Chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: top-down reporting tree for confirmed lines, then team boards for people whose manager isn't recorded yet */
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --ink: #16202a;
+  --muted: #5b6874;
+  --line: #c6ced6;
+  --accent: #0b6e8a;
+  --accent-soft: #dcecf1;
+  --warn: #9a5b00;
+  --warn-soft: #f7ead4;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10161c; --surface: #18212a; --ink: #e6ecf1; --muted: #93a1ad; --line: #34424f;
+    --accent: #5cc0dc; --accent-soft: #173543; --warn: #e8b465; --warn-soft: #3a2c15; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10161c; --surface: #18212a; --ink: #e6ecf1; --muted: #93a1ad; --line: #34424f;
+  --accent: #5cc0dc; --accent-soft: #173543; --warn: #e8b465; --warn-soft: #3a2c15; color-scheme: dark;
+}
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.45; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: 16px; padding-block: 32px 56px; display: grid; gap: 40px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: clamp(28px, 5vw, 40px); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: 20px; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 65ch; margin: 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.sw { width: 28px; height: 0; border-top: 2px solid var(--accent); }
+.sw.dash { border-top: 2px dashed var(--warn); }
+
+/* Person card */
+.p { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.p .n { font-weight: 600; }
+.p .t { font-size: 12.5px; color: var(--muted); }
+.p .m { font-family: var(--f-mono); font-size: 11.5px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.p.lead { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.p.exec { background: var(--accent-soft); border-color: var(--accent); }
+
+/* Tree */
+.tree { display: grid; justify-items: center; gap: 0; overflow-x: auto; padding-bottom: 4px; }
+.tree .p { width: 220px; text-align: center; }
+.v { width: 2px; height: 22px; background: var(--accent); }
+.row { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 14px; padding-top: 22px; width: 100%; }
+.row::before { content: ""; position: absolute; top: 0; left: 10%; right: 10%; border-top: 2px solid var(--accent); }
+.row > .p { width: 190px; position: relative; }
+.row > .p::before { content: ""; position: absolute; top: -22px; left: 50%; width: 2px; height: 22px; background: var(--accent); }
+@media (max-width: 640px) {
+  .row::before { display: none; }
+  .row > .p { width: 100%; max-width: 320px; }
+  .row > .p::before { height: 22px; }
+}
+
+/* Teams */
+.section { display: grid; gap: 14px; }
+.note { font-size: 13px; color: var(--warn); background: var(--warn-soft); border: 1px dashed var(--warn); border-radius: 8px; padding: 10px 12px; max-width: 80ch; }
+.teams { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; align-items: start; }
+.team { border: 2px dashed var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.team h3 { margin: 0; font-family: var(--f-display); font-size: 15px; font-weight: 700; display: flex; justify-content: space-between; gap: 8px; }
+.team h3 .c { font-family: var(--f-mono); font-weight: 400; font-size: 12px; color: var(--muted); }
+.tier { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.list { display: grid; gap: 8px; }
+.team.q { border-color: var(--warn); }
+footer { font-size: 12px; color: var(--muted); }
+
+.tag { font-family: var(--f-mono); font-size: 11px; color: var(--muted); }
+.flag { font-size: 11.5px; color: var(--warn); }
+.sub-team { border-left: 2px solid var(--accent); padding-left: 12px; display: grid; gap: 8px; }
+.row > .p { width: 170px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">VirTech Systems · DeLand, FL · 29 people</div>
+    <h1>Org Chart</h1>
+    <p class="sub">Everyone is in DeLand unless marked otherwise.</p>
+  </header>
+
+  <section class="section" aria-label="Leadership">
+    <h2>Reporting to Tyler Spore</h2>
+    <div class="tree">
+      <div class="p exec"><span class="n">Tyler Spore</span><span class="t">Chief Executive Officer</span><span class="m">3 direct · 28 total</span></div>
+      <div class="row">
+        <div class="p exec"><span class="n">Chris Friesen</span><span class="t">Chief Security Officer</span><span class="tag">Remote</span></div>
+        <div class="p exec"><span class="n">Karl Mahoney</span><span class="t">Chief Operations Officer</span><span class="m">7 direct · 25 total</span></div>
+        <div class="p exec"><span class="n">Janna Veneziano</span><span class="t">Chief Administrative Officer</span><span class="tag">Tyler's assistant</span></div>
+      </div>
+    </div>
+    <h2>Reporting to Karl Mahoney</h2>
+    <div class="tree">
+      <div class="p exec"><span class="n">Karl Mahoney</span><span class="t">Chief Operations Officer</span></div>
+      <div class="row">
+        <div class="p"><span class="n">Kevin Phillips</span><span class="t">Chief Technical Officer</span></div>
+        <div class="p"><span class="n">Zach Koscoe</span><span class="t">Director Of Support</span><span class="tag">now on projects</span></div>
+        <div class="p"><span class="n">Emilio Colon</span><span class="t">Project Manager</span></div>
+        <div class="p"><span class="n">Daniel Guay</span><span class="t">Account Manager</span></div>
+        <div class="p"><span class="n">Kelly Harrington</span><span class="t">Executive Operations Assistant</span></div>
+        <div class="p lead"><span class="n">Kale Osborn</span><span class="t">Helpdesk Lead</span><span class="m">leads Helpdesk</span></div>
+        <div class="p lead"><span class="n">Austin Hunter</span><span class="t">Onsite Team Lead</span><span class="m">leads Onsite</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Teams">
+    <h2>Teams</h2>
+    <div class="teams">
+      <div class="team">
+        <h3>Helpdesk · Remote support <span class="c">11</span></h3>
+        <p class="tag" style="margin:0">Everyone here reports to Kale, who reports to Karl.</p>
+        <div class="p lead"><span class="n">Kale Osborn</span><span class="t">Helpdesk Lead</span></div>
+        <div class="sub-team">
+          <div class="tier">Tier 3</div>
+          <div class="p"><span class="n">Dariel Nova</span><span class="t">Tier 3 Helpdesk Tech</span></div>
+          <div class="tier">Tier 2</div>
+          <div class="p"><span class="n">Charlie Scott</span><span class="t">Tier 2 Helpdesk Tech</span><span class="tag">Remote</span></div>
+          <div class="p"><span class="n">Gerardo Galarza</span><span class="t">Tier 2 Helpdesk Tech</span></div>
+          <div class="p"><span class="n">Sean Lawler</span><span class="t">Tier 2 Helpdesk Tech</span></div>
+          <div class="tier">Tier 1</div>
+          <div class="p"><span class="n">Alexis Erion</span><span class="t">Tier 1 Helpdesk Tech</span></div>
+          <div class="p"><span class="n">Connor Mashburn</span><span class="t">Tier 1 Helpdesk Tech</span><span class="tag">Boulevard Tire Center</span></div>
+          <div class="p"><span class="n">Jayson Registe</span><span class="t">Tier 1 Helpdesk Tech</span></div>
+          <div class="p"><span class="n">Ronaldo Walker</span><span class="t">Tier 1 Helpdesk Tech</span></div>
+          <div class="tier">Operations &amp; projects</div>
+          <div class="p"><span class="n">Chris Vitalien</span><span class="t">Field Service Coordinator</span></div>
+          <div class="p"><span class="n">Robert Ryan</span><span class="t">Projects Team</span></div>
+        </div>
+      </div>
+
+      <div class="team">
+        <h3>Onsite · Field techs <span class="c">9</span></h3>
+        <p class="tag" style="margin:0">Austin leads all onsite techs and reports to Karl.</p>
+        <div class="p lead"><span class="n">Austin Hunter</span><span class="t">Onsite Team Lead · all locations</span></div>
+        <div class="sub-team">
+          <div class="tier">Florida · DeLand</div>
+          <div class="p"><span class="n">Aidan Hathaway</span><span class="t">Tier 1 Onsite Tech</span></div>
+          <div class="p"><span class="n">Jalen Lherisson</span><span class="t">Tier 1 Onsite Tech</span></div>
+          <div class="p"><span class="n">Samantha Sperry</span><span class="t">Tier 1 Onsite Tech</span><span class="flag">Unavailable: Army Reserve deployment</span></div>
+          <div class="tier">Alabama · led by Jerry</div>
+          <div class="p lead"><span class="n">Jerry Smith</span><span class="t">Alabama Team Lead</span></div>
+          <div class="sub-team">
+            <div class="p"><span class="n">Hunter Hall</span><span class="t">Tier 1 Onsite Tech</span></div>
+            <div class="p"><span class="n">Ken Hawkins</span><span class="t">Tier 1 Onsite Tech</span></div>
+            <div class="p"><span class="n">Terence Anderson</span><span class="t">Tier 1 Onsite Tech</span></div>
+          </div>
+          <div class="tier">Colorado</div>
+          <div class="p"><span class="n">Caleb Bierbrodt</span><span class="t">Tier 1 Onsite Tech</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Source: TEAM.md, updated 2026-10-13 by Austin Hunter.</footer>
+</div>
+</body>
+</html>

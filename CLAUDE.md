@@ -12,9 +12,11 @@ Use it to answer questions like "who handles X?", "who's on site in Y area?", or
 
 ## Files
 - `TEAM.md` — the employee roster (name, title, team, role/responsibilities, notes)
+- `org-chart.html` — visual org chart built from `TEAM.md` (open in a browser)
 
 ## How to maintain
 - Only record what the user tells us or what comes from an authoritative source
   (e.g., the Microsoft 365 directory). Never guess names, titles, or pronouns.
 - Keep `TEAM.md` grouped by team and sorted by name within each team.
 - When someone changes roles or leaves, update or remove their entry and commit.
+- Keep `org-chart.html` in sync with `TEAM.md` whenever the roster changes.
